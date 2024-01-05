@@ -1,18 +1,28 @@
+import { ArchiveOutlined, UnarchiveOutlined } from "@mui/icons-material";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 import React, { HTMLAttributes, useEffect, useState } from "react";
-import { AppLayout } from "../../components/layouts/appLayout";
-import TabLayout from "../../components/layouts/TabLayout";
 import ActivityItem from "../../components/Activity/ActivityItem";
+import TabLayout from "../../components/layouts/TabLayout";
+import { AppLayout } from "../../components/layouts/appLayout";
 import { IActivity } from "../../models/activity.model";
 import {
   getActivities,
   setActivityArchiveStatus,
 } from "../../services/activity.service";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import Divider from "@mui/material/Divider";
-import { ArchiveOutlined, UnarchiveOutlined } from "@mui/icons-material";
 
 const ACTIVITY_TABS = ["inbox", "archieved"] as const;
+
+const Shimmer = () => (
+  <>
+    <div className="flex gap-2 flex-col p-4 bg-white rounded-md shadow-md">
+      {Array.from({ length: 10 }).map(() => (
+        <p className="leading-relaxed mb-3 w-full h-10 animate-pulse bg-gray-200" />
+      ))}
+    </div>
+  </>
+);
 
 const ActivityFeed: React.FC = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
@@ -104,7 +114,7 @@ const ActivityFeed: React.FC = () => {
               <p className="text-gray-400 mt-6">No activities yet</p>
             </div>
           ) : isLoading ? (
-            <p>Loading...</p>
+            <Shimmer />
           ) : (
             Object.entries(groupByDate)
               .sort(([a], [b]) => Number(new Date(b)) - Number(new Date(a)))
