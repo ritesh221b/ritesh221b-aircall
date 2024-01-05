@@ -1,6 +1,5 @@
-import React from "react";
-import { AppLayout } from "../components/layouts/appLayout";
 import TabLayout from "../components/layouts/TabLayout";
+import { AppLayout } from "../components/layouts/appLayout";
 
 const Error404 = () => {
   return (
