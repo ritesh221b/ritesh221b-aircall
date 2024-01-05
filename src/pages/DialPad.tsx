@@ -1,13 +1,14 @@
-import TabLayout from "../components/layouts/TabLayout";
+import React from "react";
 import { AppLayout } from "../components/layouts/appLayout";
+import TabLayout from "../components/layouts/TabLayout";
 
-const Contacts = () => {
+const DialPad = () => {
   return (
     <AppLayout>
-      <TabLayout title="Contacts" description="">
+      <TabLayout title="Dial" description="">
         <div className="bg-white px-4 flex flex-col items-center justify-center h-full">
           <div className="text-center">
-            <h1 className="text-5xl font-black text-gray-500">Contacts</h1>
+            <h1 className="text-5xl font-black text-gray-500">Dial Pad</h1>
           </div>
         </div>
       </TabLayout>
@@ -15,4 +16,4 @@ const Contacts = () => {
   );
 };
 
-export default Contacts;
+export default DialPad;
