@@ -6,6 +6,14 @@ import { AppLayout } from "../../components/layouts/appLayout";
 import { IActivity } from "../../models/activity.model";
 import { getActivityById } from "../../services/activity.service";
 
+const ImageShimmer = () => {
+  return (
+    <div className="animate-pulse flex space-x-4">
+      <div className="rounded-full bg-gray-400 h-24 w-24"></div>
+    </div>
+  );
+};
+
 const ActivityDetail = () => {
   const { id } = useParams();
 
@@ -30,11 +38,15 @@ const ActivityDetail = () => {
             <span>Back</span>
           </NavLink>
           <div className="flex justify-center mt-4">
-            <img
-              className="mx-auto object-cover rounded-full h-24 w-24"
-              src={`https://i.pravatar.cc/150?u=${activity?.id}`}
-              alt={`User ${activity?.from}`}
-            />
+            {!activity?.id ? (
+              <ImageShimmer />
+            ) : (
+              <img
+                className="mx-auto object-cover rounded-full h-24 w-24"
+                src={`https://i.pravatar.cc/150?u=${activity?.id}`}
+                alt={`User ${activity?.from}`}
+              />
+            )}
           </div>
           <div className="mt-4">
             <h1 className="font-bold text-center text-3xl text-gray-900">
