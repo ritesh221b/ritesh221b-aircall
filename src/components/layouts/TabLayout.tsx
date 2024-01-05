@@ -11,7 +11,6 @@ const TabLayout = ({
   title,
   description,
   topBarButtons,
-  bottomBarBottons,
 }: ITabLayoutProps) => {
   return (
     <div className="w-full h-screen sm:w-[26rem] sm:h-[32rem] flex flex-col border shadow-md bg-white">
@@ -34,10 +33,6 @@ const TabLayout = ({
       </div>
 
       <div className="flex-1 overflow-y-auto">{children}</div>
-
-      <div className="flex items-center border-t p-2">
-        {bottomBarBottons && bottomBarBottons}
-      </div>
     </div>
   );
 };
