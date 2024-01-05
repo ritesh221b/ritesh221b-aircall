@@ -58,11 +58,11 @@ const TabLayout = ({
 }: ITabLayoutProps) => {
   return (
     <div className="w-full h-screen sm:w-[26rem] sm:h-[32rem] flex flex-col border shadow-md bg-white">
-      <div className="flex items-center justify-between border-b p-2">
+      <div className="flex items-center justify-between border-b p-2 h-14">
         {/* Tab Info */}
         <div className="flex items-center">
           <Icon></Icon>
-          <div className="pl-2">
+          <div className="pl-2 hidden">
             <div className="font-semibold">
               <a className="hover:underline" href="#">
                 {title}
