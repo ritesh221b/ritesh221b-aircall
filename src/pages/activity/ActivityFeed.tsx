@@ -134,10 +134,13 @@ const ActivityFeed: React.FC = () => {
                             className="sm:invisible sm:group-hover:visible"
                             onClick={() => {
                               setIsLoading(true);
-                              setActivityArchiveStatus(activity.id, true);
+                              setActivityArchiveStatus(
+                                activity.id,
+                                !activity.is_archived,
+                              );
                               fetchActivities();
                             }}
-                            aria-label="delete"
+                            aria-label="archieve"
                           >
                             {activity.is_archived ? (
                               <UnarchiveOutlined />
