@@ -131,7 +131,7 @@ const ActivityFeed: React.FC = () => {
                           title={activity.is_archived ? "Unarchive" : "Archive"}
                         >
                           <IconButton
-                            className="invisible group-hover:visible"
+                            className="sm:invisible sm:group-hover:visible"
                             onClick={() => {
                               setIsLoading(true);
                               setActivityArchiveStatus(activity.id, true);
