@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { IActivity } from "../../models/activity.model";
 
 import {
@@ -40,7 +41,9 @@ const ActivityItem = ({
           <QuestionMarkOutlined />
         )}
         <div className="flex flex-col text-left align-top">
-          <div className="font-medium">{from ?? "Unknown"}</div>
+          <NavLink to={`/activity-details/${id}`} className="font-medium">
+            {from ?? "Unknown"}
+          </NavLink>
           <div className="text-xs text-gray-600 ">
             <span className="hidden">{call_type || "Unknown"}</span>{" "}
             <span className="hidden">

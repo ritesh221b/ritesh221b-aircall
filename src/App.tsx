@@ -6,6 +6,7 @@ import DialPad from "./pages/DialPad";
 import Settings from "./pages/Settings";
 import ActivityFeed from "./pages/activity/ActivityFeed";
 import Recordings from "./pages/Recordings";
+import ActivityDetail from "./pages/activity/ActivityDetail";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ActivityFeed />} />
         <Route path="contacts" element={<Contacts />} />
+        <Route path="activity-details/:id" element={<ActivityDetail />} />
         <Route path="dial-pad" element={<DialPad />} />
         <Route path="settings" element={<Settings />} />
         <Route path="recordings" element={<Recordings />} />
