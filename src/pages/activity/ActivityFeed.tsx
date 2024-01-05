@@ -35,6 +35,7 @@ const ActivityFeed: React.FC = () => {
       console.error(error);
     } finally {
       setIsLoading(false);
+      setArchievingId("");
     }
   };
 
@@ -59,7 +60,6 @@ const ActivityFeed: React.FC = () => {
       console.error(error);
     } finally {
       fetchActivities();
-      setArchievingId("");
     }
   };
 

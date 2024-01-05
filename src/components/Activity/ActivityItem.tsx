@@ -3,9 +3,45 @@ import { IActivity } from "../../models/activity.model";
 
 import {
   CallMade,
+  CallMissed,
   CallReceived,
-  QuestionMarkOutlined,
+  Voicemail,
 } from "@mui/icons-material";
+import { secondsToTime } from "../../utils";
+
+const CallType = ({ call_type }: { call_type: string }) => {
+  switch (call_type) {
+    case "missed":
+      return (
+        <>
+          {" "}
+          <CallMissed color={"error"} fontSize="small" /> missed call
+        </>
+      );
+    case "voicemail":
+      return (
+        <>
+          {" "}
+          <Voicemail color={"info"} fontSize="small" /> voicemail
+        </>
+      );
+    case "answered":
+      return <>received</>;
+    default:
+      return null;
+  }
+};
+
+const CallDirection = ({ direction }: { direction: string }) => {
+  switch (direction) {
+    case "inbound":
+      return <CallReceived color={"success"} fontSize="small" />;
+    case "outbound":
+      return <CallMade color={"info"} fontSize="small" />;
+    default:
+      return null;
+  }
+};
 
 interface IActivityItemProps extends IActivity {
   ActionButtons?: React.ReactNode;
@@ -14,10 +50,8 @@ interface IActivityItemProps extends IActivity {
 const ActivityItem = ({
   id,
   from,
-  to,
   via,
   direction,
-  is_archived,
   duration,
   call_type,
   ActionButtons,
@@ -34,30 +68,19 @@ const ActivityItem = ({
           alt={`User ${from}`}
         />
 
-        {direction ? (
-          direction === "inbound" ? (
-            <CallReceived />
-          ) : (
-            <CallMade />
-          )
-        ) : (
-          <QuestionMarkOutlined />
-        )}
+        <CallDirection direction={direction} />
         <div className="flex flex-col text-left align-top">
           <div className="font-medium">{from ?? "Unknown"}</div>
           <div className="text-xs text-gray-600 ">
-            <span className="hidden">{call_type || "Unknown"}</span>{" "}
-            <span className="hidden">
-              {is_archived ? "Archived" : "Active"}
-            </span>{" "}
-            <span className="hidden">{to ? `To: ${to}` : "Unknown"}</span>{" "}
-            <span className="hidden">{from ? `From: ${from}` : "Unknown"}</span>{" "}
-            <span className="">{via ? `Via: ${via}` : "Unknown"}</span>{" "}
-            <span className="hidden">{duration && ` | ${duration} min`}</span>
-            <i className="text-xs text-gray-600 ml-2 hidden">{"6:00 AM"}</i>
+            <CallType call_type={call_type} />
+            <span className="">{via ? ` | via: ${via}` : "Unknown"}</span>{" "}
           </div>
         </div>
       </NavLink>
+
+      <div className="flex justify-center">
+        <span className="">{`${secondsToTime(duration)}`}</span>
+      </div>
 
       <div>{ActionButtons}</div>
     </li>
