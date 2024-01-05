@@ -65,10 +65,27 @@ const ActivityDetail = () => {
                       {activity?.via}
                     </span>
                   </div>
+
+                  <div className="flex gap-2 items-center">
+                    Phone:
+                    <span className="text-gray-500 text-xs">
+                      {activity?.from}
+                    </span>
+                  </div>
+
                   <div className="flex gap-2 items-center">
                     Time:
                     <span className="text-gray-500 text-xs">
                       {activity?.created_at}
+                    </span>
+                  </div>
+
+                  <div className="flex gap-2 items-center">
+                    Duration:
+                    <span className="text-gray-500 text-xs">
+                      {activity?.duration
+                        ? (activity.duration / 60).toFixed(2)
+                        : ""}
                     </span>
                   </div>
                 </span>

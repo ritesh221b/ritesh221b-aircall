@@ -24,7 +24,10 @@ const ActivityItem = ({
 }: IActivityItemProps) => {
   return (
     <li className="p-3 flex justify-between items-center user-card mx-3 group">
-      <div className="flex items-center gap-2">
+      <NavLink
+        to={`/activity-details/${id}`}
+        className="flex items-center gap-2"
+      >
         <img
           className="mx-auto object-cover rounded-full h-10 w-10"
           src={`https://i.pravatar.cc/150?u=${id}`}
@@ -41,9 +44,7 @@ const ActivityItem = ({
           <QuestionMarkOutlined />
         )}
         <div className="flex flex-col text-left align-top">
-          <NavLink to={`/activity-details/${id}`} className="font-medium">
-            {from ?? "Unknown"}
-          </NavLink>
+          <div className="font-medium">{from ?? "Unknown"}</div>
           <div className="text-xs text-gray-600 ">
             <span className="hidden">{call_type || "Unknown"}</span>{" "}
             <span className="hidden">
@@ -56,7 +57,7 @@ const ActivityItem = ({
             <i className="text-xs text-gray-600 ml-2 hidden">{"6:00 AM"}</i>
           </div>
         </div>
-      </div>
+      </NavLink>
 
       <div>{ActionButtons}</div>
     </li>
