@@ -25,8 +25,3 @@ export function formatTime(timestamp: string) {
 
   return formattedTime;
 }
-
-// Example usage:
-const timestamp = Date.now(); // Replace this with your timestamp or time value
-const humanReadableTime = formatTime(timestamp);
-console.log(humanReadableTime);
