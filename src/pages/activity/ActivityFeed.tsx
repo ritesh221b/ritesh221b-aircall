@@ -49,7 +49,7 @@ const ActivityFeed: React.FC = () => {
 
   const archiveAllActivities = async (status: boolean) => {
     setIsLoading(true);
-    await Promise.all(
+    await Promise.allSettled(
       activities
         .filter((each) => each.is_archived === !status)
         .map((activity) => setActivityArchiveStatus(activity.id, status)),
@@ -109,7 +109,7 @@ const ActivityFeed: React.FC = () => {
             ))}
           </div>
 
-          {filteredList.length < 1 ? (
+          {filteredList.length < 1 && !isLoading ? (
             <div className="flex flex-col items-center justify-center h-full">
               <p className="text-gray-400 mt-6">No activities yet</p>
             </div>
