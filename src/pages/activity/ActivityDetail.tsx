@@ -5,6 +5,7 @@ import TabLayout from "../../components/layouts/TabLayout";
 import { AppLayout } from "../../components/layouts/appLayout";
 import { IActivity } from "../../models/activity.model";
 import { getActivityById } from "../../services/activity.service";
+import { formatTime, secondsToTime } from "../../utils";
 
 const ImageShimmer = () => {
   return (
@@ -19,16 +20,15 @@ const ActivityDetail = () => {
 
   const [activity, setActivity] = useState<IActivity | null>(null);
 
+  const fetchActivity = async (id: string) => {
+    const res = await getActivityById(id);
+    setActivity(res?.data);
+  };
+
   useEffect(() => {
-    if (id) {
-      (async () => {
-        const res = await getActivityById(id);
-        setActivity(res?.data);
-      })();
-    }
+    id && fetchActivity(id);
   }, [id]);
 
-  console.log(id);
   return (
     <AppLayout>
       <TabLayout title="Details" description="">
@@ -66,9 +66,10 @@ const ActivityDetail = () => {
               <div className="mt-5 w-full flex flex-col gap-2 items-center overflow-hidden text-sm">
                 <span className="w-full gap-2 border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 block hover:bg-gray-100 transition duration-150">
                   <div className="flex gap-2 items-center">
-                    {/* <ArchiveOutlined></ArchiveOutlined> */}
-                    {/* Updated his status:  */}
-                    {/* <span className="text-gray-500 text-xs">24 min ago</span> */}
+                    ID:
+                    <span className="text-gray-500 text-xs">
+                      {activity?.id}
+                    </span>
                   </div>
 
                   <div className="flex gap-2 items-center">
@@ -88,16 +89,14 @@ const ActivityDetail = () => {
                   <div className="flex gap-2 items-center">
                     Time:
                     <span className="text-gray-500 text-xs">
-                      {activity?.created_at}
+                      {activity?.created_at && formatTime(activity?.created_at)}
                     </span>
                   </div>
 
                   <div className="flex gap-2 items-center">
                     Duration:
                     <span className="text-gray-500 text-xs">
-                      {activity?.duration
-                        ? (activity.duration / 60).toFixed(2)
-                        : ""}
+                      {activity?.duration && secondsToTime(activity?.duration)}
                     </span>
                   </div>
                 </span>

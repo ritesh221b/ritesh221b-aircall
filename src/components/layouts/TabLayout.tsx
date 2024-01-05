@@ -74,7 +74,6 @@ const TabLayout = ({
         {/* Tab Info */}
 
         <div>{topBarButtons && topBarButtons}</div>
-        {/* end chat box action */}
       </div>
 
       <div className="flex-1 overflow-y-auto">{children}</div>

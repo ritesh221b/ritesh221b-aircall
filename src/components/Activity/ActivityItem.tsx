@@ -8,41 +8,6 @@ import {
   Voicemail,
 } from "@mui/icons-material";
 import { secondsToTime } from "../../utils";
-
-const CallType = ({ call_type }: { call_type: string }) => {
-  switch (call_type) {
-    case "missed":
-      return (
-        <>
-          {" "}
-          <CallMissed color={"error"} fontSize="small" /> missed call
-        </>
-      );
-    case "voicemail":
-      return (
-        <>
-          {" "}
-          <Voicemail color={"info"} fontSize="small" /> voicemail
-        </>
-      );
-    case "answered":
-      return <>received</>;
-    default:
-      return null;
-  }
-};
-
-const CallDirection = ({ direction }: { direction: string }) => {
-  switch (direction) {
-    case "inbound":
-      return <CallReceived color={"success"} fontSize="small" />;
-    case "outbound":
-      return <CallMade color={"info"} fontSize="small" />;
-    default:
-      return null;
-  }
-};
-
 interface IActivityItemProps extends IActivity {
   ActionButtons?: React.ReactNode;
 }
@@ -85,6 +50,40 @@ const ActivityItem = ({
       <div>{ActionButtons}</div>
     </li>
   );
+};
+
+const CallType = ({ call_type }: { call_type: string }) => {
+  switch (call_type) {
+    case "missed":
+      return (
+        <>
+          {" "}
+          <CallMissed color={"error"} fontSize="small" /> missed call
+        </>
+      );
+    case "voicemail":
+      return (
+        <>
+          {" "}
+          <Voicemail color={"info"} fontSize="small" /> voicemail
+        </>
+      );
+    case "answered":
+      return <>received</>;
+    default:
+      return null;
+  }
+};
+
+const CallDirection = ({ direction }: { direction: string }) => {
+  switch (direction) {
+    case "inbound":
+      return <CallReceived color={"success"} fontSize="small" />;
+    case "outbound":
+      return <CallMade color={"info"} fontSize="small" />;
+    default:
+      return null;
+  }
 };
 
 export default ActivityItem;
