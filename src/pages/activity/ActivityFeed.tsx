@@ -15,16 +15,6 @@ import { CircularProgress } from "@mui/material";
 
 const ACTIVITY_TABS = ["inbox", "archieved"] as const;
 
-// const Shimmer = () => (
-//   <>
-//     <div className="flex gap-2 flex-col p-4 bg-white rounded-md shadow-md">
-//       {Array.from({ length: 10 }).map(() => (
-//         <p className="leading-relaxed mb-3 w-full h-10 animate-pulse bg-gray-200" />
-//       ))}
-//     </div>
-//   </>
-// );
-
 const ActivityFeed: React.FC = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
   const [activeTab, setActiveTab] = useState<(typeof ACTIVITY_TABS)[number]>(
