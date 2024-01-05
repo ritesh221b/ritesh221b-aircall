@@ -135,11 +135,16 @@ const ActivityFeed: React.FC = () => {
                             onClick={() => {
                               (async () => {
                                 setIsLoading(true);
-                                await setActivityArchiveStatus(
-                                  activity.id,
-                                  !activity.is_archived,
-                                );
-                                fetchActivities();
+                                try {
+                                  await setActivityArchiveStatus(
+                                    activity.id,
+                                    !activity.is_archived,
+                                  );
+                                } catch (error) {
+                                  console.error(error);
+                                } finally {
+                                  fetchActivities();
+                                }
                               })();
                             }}
                             aria-label="archieve"

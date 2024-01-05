@@ -7,10 +7,13 @@ import Settings from "./pages/Settings";
 import ActivityFeed from "./pages/activity/ActivityFeed";
 import Recordings from "./pages/Recordings";
 import ActivityDetail from "./pages/activity/ActivityDetail";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <>
+      <Toaster />
+
       <Routes>
         <Route path="/" element={<ActivityFeed />} />
         <Route path="contacts" element={<Contacts />} />

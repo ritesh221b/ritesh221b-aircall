@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const axiosInstance = axios.create({
   baseURL: "https://cerulean-marlin-wig.cyclic.app",
@@ -21,6 +22,7 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
+    toast.error("Something went wrong");
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
