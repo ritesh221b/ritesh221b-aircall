@@ -139,7 +139,7 @@ const ActivityFeed: React.FC = () => {
                                   activity.id,
                                   !activity.is_archived,
                                 );
-                                await fetchActivities();
+                                fetchActivities();
                               })();
                             }}
                             aria-label="archieve"
