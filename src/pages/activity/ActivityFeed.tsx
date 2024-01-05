@@ -11,18 +11,19 @@ import {
   getActivities,
   setActivityArchiveStatus,
 } from "../../services/activity.service";
+import { CircularProgress } from "@mui/material";
 
 const ACTIVITY_TABS = ["inbox", "archieved"] as const;
 
-const Shimmer = () => (
-  <>
-    <div className="flex gap-2 flex-col p-4 bg-white rounded-md shadow-md">
-      {Array.from({ length: 10 }).map(() => (
-        <p className="leading-relaxed mb-3 w-full h-10 animate-pulse bg-gray-200" />
-      ))}
-    </div>
-  </>
-);
+// const Shimmer = () => (
+//   <>
+//     <div className="flex gap-2 flex-col p-4 bg-white rounded-md shadow-md">
+//       {Array.from({ length: 10 }).map(() => (
+//         <p className="leading-relaxed mb-3 w-full h-10 animate-pulse bg-gray-200" />
+//       ))}
+//     </div>
+//   </>
+// );
 
 const ActivityFeed: React.FC = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
@@ -30,7 +31,7 @@ const ActivityFeed: React.FC = () => {
     ACTIVITY_TABS[0],
   );
   const [isLoading, setIsLoading] = useState(false);
-
+  const [archievingId, setArchievingId] = useState<string>("");
   useEffect(() => {
     fetchActivities();
   }, []);
@@ -55,6 +56,21 @@ const ActivityFeed: React.FC = () => {
         .map((activity) => setActivityArchiveStatus(activity.id, status)),
     );
     fetchActivities();
+  };
+
+  const handleActivityArchiveStatus = async (
+    id: string,
+    is_archived: boolean,
+  ) => {
+    setArchievingId(id);
+    try {
+      await setActivityArchiveStatus(id, !is_archived);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      fetchActivities();
+      setArchievingId("");
+    }
   };
 
   const filteredList = activities.filter(
@@ -113,8 +129,6 @@ const ActivityFeed: React.FC = () => {
             <div className="flex flex-col items-center justify-center h-full">
               <p className="text-gray-400 mt-6">No activities yet</p>
             </div>
-          ) : isLoading ? (
-            <Shimmer />
           ) : (
             Object.entries(groupByDate)
               .sort(([a], [b]) => Number(new Date(b)) - Number(new Date(a)))
@@ -133,23 +147,16 @@ const ActivityFeed: React.FC = () => {
                           <IconButton
                             className="sm:invisible sm:group-hover:visible"
                             onClick={() => {
-                              (async () => {
-                                setIsLoading(true);
-                                try {
-                                  await setActivityArchiveStatus(
-                                    activity.id,
-                                    !activity.is_archived,
-                                  );
-                                } catch (error) {
-                                  console.error(error);
-                                } finally {
-                                  fetchActivities();
-                                }
-                              })();
+                              handleActivityArchiveStatus(
+                                activity.id,
+                                activity.is_archived,
+                              );
                             }}
                             aria-label="archieve"
                           >
-                            {activity.is_archived ? (
+                            {archievingId === activity.id ? (
+                              <CircularProgress size={20} />
+                            ) : activity.is_archived ? (
                               <UnarchiveOutlined />
                             ) : (
                               <ArchiveOutlined />
