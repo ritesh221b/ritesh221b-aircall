@@ -8,8 +8,9 @@ import {
   setActivityArchiveStatus,
 } from "../../services/activity.service";
 import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 import Divider from "@mui/material/Divider";
-import { ArchiveOutlined } from "@mui/icons-material";
+import { ArchiveOutlined, UnarchiveOutlined } from "@mui/icons-material";
 
 const ACTIVITY_TABS = ["inbox", "archieved"] as const;
 
@@ -41,7 +42,7 @@ const ActivityFeed: React.FC = () => {
     await Promise.all(
       activities
         .filter((each) => each.is_archived === !status)
-        .map((activity) => setActivityArchiveStatus(activity.id, true)),
+        .map((activity) => setActivityArchiveStatus(activity.id, status)),
     );
     fetchActivities();
   };
@@ -70,9 +71,10 @@ const ActivityFeed: React.FC = () => {
         topBarButtons={
           <ArchieveButton
             onClick={() => {
+              console.log(activeTab === "inbox");
               archiveAllActivities(activeTab === "inbox");
             }}
-            title={activeTab === "inbox" ? "Archieve All" : "Un-archieve"}
+            archive={activeTab === "inbox"}
           />
         }
       >
@@ -114,17 +116,26 @@ const ActivityFeed: React.FC = () => {
                       key={activity.id}
                       {...activity}
                       ActionButtons={
-                        <IconButton
-                          className="invisible group-hover:visible"
-                          onClick={() => {
-                            setIsLoading(true);
-                            setActivityArchiveStatus(activity.id, true);
-                            fetchActivities();
-                          }}
-                          aria-label="delete"
+                        <Tooltip
+                          placement="top"
+                          title={activity.is_archived ? "Unarchive" : "Archive"}
                         >
-                          <ArchiveOutlined />
-                        </IconButton>
+                          <IconButton
+                            className="invisible group-hover:visible"
+                            onClick={() => {
+                              setIsLoading(true);
+                              setActivityArchiveStatus(activity.id, true);
+                              fetchActivities();
+                            }}
+                            aria-label="delete"
+                          >
+                            {activity.is_archived ? (
+                              <UnarchiveOutlined />
+                            ) : (
+                              <ArchiveOutlined />
+                            )}
+                          </IconButton>
+                        </Tooltip>
                       }
                     />
                   ))}
@@ -138,19 +149,30 @@ const ActivityFeed: React.FC = () => {
 };
 
 interface ArchieveButtonProps extends HTMLAttributes<HTMLButtonElement> {
-  title?: string;
+  archive: boolean;
 }
 
-const ArchieveButton: React.FC<ArchieveButtonProps> = ({ title, ...props }) => (
-  <button
-    className="inline-flex gap-1 hover:bg-indigo-50 rounded-full p-2"
-    type="button"
-    {...props}
-    aria-label={title}
-  >
-    <ArchiveOutlined className="w-6 h-6" />
-    {title}
-  </button>
-);
+const ArchieveButton: React.FC<ArchieveButtonProps> = ({
+  archive,
+  ...props
+}) => {
+  const title = archive ? "Archieve All" : "Un-Archieve All";
+  return (
+    <button
+      className="inline-flex gap-1 hover:bg-indigo-50 rounded-full p-2"
+      type="button"
+      {...props}
+      aria-label={title}
+    >
+      {!archive ? (
+        <UnarchiveOutlined className="w-6 h-6" />
+      ) : (
+        <ArchiveOutlined className="w-6 h-6" />
+      )}
+
+      {title}
+    </button>
+  );
+};
 
 export default ActivityFeed;
