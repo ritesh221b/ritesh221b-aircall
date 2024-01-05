@@ -1,10 +1,17 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import { AppLayout } from "./components/layouts/appLayout";
+import ActivityFeed from "./pages/activity/ActivityFeed";
+import Error404 from "./pages/404";
+import Archive from "./pages/activity/Archive";
 
 function App() {
   return (
     <>
-      <AppLayout></AppLayout>
+      <Routes>
+        <Route path="/" element={<ActivityFeed />} />
+        <Route path="archieve" element={<Archive />} />
+        <Route path="*" element={<Error404 />} />
+      </Routes>
     </>
   );
 }
