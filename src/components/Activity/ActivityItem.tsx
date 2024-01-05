@@ -42,14 +42,15 @@ const ActivityItem = ({
         <div className="flex flex-col text-left align-top">
           <div className="font-medium">{from ?? "Unknown"}</div>
           <div className="text-xs text-gray-600 ">
-            {call_type ? call_type : "Unknown"}
-            {is_archived ? "Archived" : "Active"}
-            {to ? "Archived" : "Active"}
-            {from ? "Archived" : "Active"}
-            {via ? "Archived" : "Active"}
-
-            {duration && ` | ${duration} min`}
-            <i className="text-xs text-gray-600 ml-2">{"6:00 AM"}</i>
+            <span className="hidden">{call_type || "Unknown"}</span>{" "}
+            <span className="hidden">
+              {is_archived ? "Archived" : "Active"}
+            </span>{" "}
+            <span className="hidden">{to ? `To: ${to}` : "Unknown"}</span>{" "}
+            <span className="hidden">{from ? `From: ${from}` : "Unknown"}</span>{" "}
+            <span className="">{via ? `Via: ${via}` : "Unknown"}</span>{" "}
+            <span className="hidden">{duration && ` | ${duration} min`}</span>
+            <i className="text-xs text-gray-600 ml-2 hidden">{"6:00 AM"}</i>
           </div>
         </div>
       </div>
