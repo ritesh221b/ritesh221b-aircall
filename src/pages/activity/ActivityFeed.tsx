@@ -133,12 +133,14 @@ const ActivityFeed: React.FC = () => {
                           <IconButton
                             className="sm:invisible sm:group-hover:visible"
                             onClick={() => {
-                              setIsLoading(true);
-                              setActivityArchiveStatus(
-                                activity.id,
-                                !activity.is_archived,
-                              );
-                              fetchActivities();
+                              (async () => {
+                                setIsLoading(true);
+                                await setActivityArchiveStatus(
+                                  activity.id,
+                                  !activity.is_archived,
+                                );
+                                await fetchActivities();
+                              })();
                             }}
                             aria-label="archieve"
                           >
